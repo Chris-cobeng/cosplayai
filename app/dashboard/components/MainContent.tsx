@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Download, Share2, ZoomIn, X, Clock, Trash2, ImageIcon, Plus, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
+    type CarouselApi,
 } from "@/components/ui/carousel";
 
 interface GalleryImage {
@@ -98,6 +99,20 @@ export default function MainContent({
 }: MainContentProps) {
     const [dragActive, setDragActive] = useState(false);
     const [carouselIndex, setCarouselIndex] = useState<number | null>(null);
+    const [api, setApi] = useState<CarouselApi>();
+
+    useEffect(() => {
+        if (!api) return;
+
+        const onSelect = () => {
+            setCarouselIndex(api.selectedScrollSnap());
+        };
+
+        api.on("select", onSelect);
+        return () => {
+            api.off("select", onSelect);
+        };
+    }, [api]);
 
     const handleDrag = (e: React.DragEvent) => {
         e.preventDefault();
@@ -428,17 +443,12 @@ export default function MainContent({
                                 opts={{
                                     startIndex: carouselIndex ?? 0,
                                 }}
-                                setApi={(api) => {
-                                    if (!api) return;
-                                    api.on("select", () => {
-                                        setCarouselIndex(api.selectedScrollSnap());
-                                    });
-                                }}
+                                setApi={setApi}
                             >
                                 <CarouselContent className="h-full">
                                     {galleryImages.map((image) => (
                                         <CarouselItem key={image.id} className="h-full flex items-center justify-center">
-                                            <div className="relative w-full h-full p-4 md:p-12 flex items-center justify-center">
+                                            <div className="relative w-full h-full p-8 md:p-24 flex items-center justify-center">
                                                 <img
                                                     src={image.url}
                                                     alt="Cosplay generation"
@@ -448,9 +458,9 @@ export default function MainContent({
                                         </CarouselItem>
                                     ))}
                                 </CarouselContent>
-                                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-10 pointer-events-none">
-                                    <CarouselPrevious className="relative translate-x-0 pointer-events-auto bg-zinc-900/50 border-zinc-800 text-white hover:bg-zinc-800 hover:text-white h-12 w-12" />
-                                    <CarouselNext className="relative translate-x-0 pointer-events-auto bg-zinc-900/50 border-zinc-800 text-white hover:bg-zinc-800 hover:text-white h-12 w-12" />
+                                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-6 md:px-16 pointer-events-none">
+                                    <CarouselPrevious className="relative translate-x-0 pointer-events-auto bg-zinc-900/50 border-zinc-800 text-white hover:bg-zinc-800 hover:text-white h-14 w-14 shadow-2xl hover:scale-110 transition-transform" />
+                                    <CarouselNext className="relative translate-x-0 pointer-events-auto bg-zinc-900/50 border-zinc-800 text-white hover:bg-zinc-800 hover:text-white h-14 w-14 shadow-2xl hover:scale-110 transition-transform" />
                                 </div>
                             </Carousel>
                         </div>

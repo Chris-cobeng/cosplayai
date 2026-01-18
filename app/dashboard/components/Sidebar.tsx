@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Image as ImageIcon, Sparkles, X, Plus, Wand2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,13 +46,28 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
     };
 
     const handleFile = (file: File) => {
+        if (uploadedImage) {
+            URL.revokeObjectURL(uploadedImage);
+        }
         const url = URL.createObjectURL(file);
         setUploadedImage(url);
     };
 
     const removeImage = () => {
+        if (uploadedImage) {
+            URL.revokeObjectURL(uploadedImage);
+        }
         setUploadedImage(null);
     };
+
+    // Cleanup blob URLs on unmount
+    useEffect(() => {
+        return () => {
+            if (uploadedImage) {
+                URL.revokeObjectURL(uploadedImage);
+            }
+        };
+    }, [uploadedImage]);
 
     return (
         <div className="h-full flex flex-col relative text-zinc-100">
@@ -190,7 +205,7 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
                         "w-full py-4 rounded-xl flex items-center justify-center gap-3 font-bold transition-all duration-300 active:scale-[0.98] border shadow-2xl group",
                         isGenerating
                             ? "bg-zinc-900 border-zinc-800 text-zinc-700 cursor-not-allowed"
-                            : "bg-linear-to-r from-[#FF8C37] via-[#E12B89] via-[#9F54B0] to-[#00B19D] hover:opacity-90 border-white/20 text-white shadow-xl"
+                            : "bg-linear-to-r from-[#FF8C37] via-[#E12B89] to-[#00B19D] hover:opacity-90 border-white/20 text-white shadow-xl"
                     )}
                 >
                     {isGenerating ? (

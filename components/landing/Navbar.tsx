@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Button } from "@/components/ui/button"; // Access from shadcn if available, or I'll just style native buttons if simpler, but I should try to reuse.
+import { motion, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { SignInButton, SignUpButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -56,20 +56,34 @@ export function Navbar() {
 
                 {/* Desktop Auth */}
                 <div className="hidden md:flex items-center gap-4">
-                    <Link
-                        href="/login"
-                        className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                    >
-                        Sign In
-                    </Link>
-                    <button className="relative px-6 py-2.5 rounded-full font-medium text-white text-sm group overflow-hidden">
-                        <span className="absolute inset-0 bg-gradient-to-r from-violet-600 to-pink-500 transition-all duration-300 group-hover:scale-105" />
-                        <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <span className="relative flex items-center gap-2">
-                            Start Free Trial
-                        </span>
-                        <div className="absolute inset-0 -z-10 blur-lg bg-violet-600/50 opacity-0 group-hover:opacity-50 transition-opacity" />
-                    </button>
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <button className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                                Sign In
+                            </button>
+                        </SignInButton>
+
+                        <SignUpButton mode="modal">
+                            <button className="relative px-6 py-2.5 rounded-full font-medium text-white text-sm group overflow-hidden">
+                                <span className="absolute inset-0 bg-gradient-to-r from-violet-600 to-pink-500 transition-all duration-300 group-hover:scale-105" />
+                                <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <span className="relative flex items-center gap-2">
+                                    Start Free Trial
+                                </span>
+                                <div className="absolute inset-0 -z-10 blur-lg bg-violet-600/50 opacity-0 group-hover:opacity-50 transition-opacity" />
+                            </button>
+                        </SignUpButton>
+                    </SignedOut>
+
+                    <SignedIn>
+                        <UserButton
+                            appearance={{
+                                elements: {
+                                    avatarBox: "w-10 h-10 border border-white/10"
+                                }
+                            }}
+                        />
+                    </SignedIn>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -99,15 +113,27 @@ export function Navbar() {
                         </Link>
                     ))}
                     <div className="h-px bg-white/10" />
-                    <Link
-                        href="/login"
-                        className="text-lg font-medium text-gray-300 hover:text-white"
-                    >
-                        Sign In
-                    </Link>
-                    <button className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-violet-600 to-pink-500">
-                        Start Free Trial
-                    </button>
+
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <button className="text-lg font-medium text-gray-300 hover:text-white text-left">
+                                Sign In
+                            </button>
+                        </SignInButton>
+                        <SignUpButton mode="modal">
+                            <button className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-violet-600 to-pink-500">
+                                Start Free Trial
+                            </button>
+                        </SignUpButton>
+                    </SignedOut>
+
+                    <SignedIn>
+                        <div className="flex items-center gap-4">
+                            <UserButton />
+                            <span className="text-gray-300">Account</span>
+                        </div>
+                    </SignedIn>
+
                 </motion.div>
             )}
         </motion.nav>

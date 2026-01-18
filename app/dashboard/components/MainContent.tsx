@@ -294,7 +294,7 @@ export default function MainContent({
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 20 }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 pb-12"
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6 pb-12"
                         >
                             {/* Custom Style Upload Card */}
                             <motion.div
@@ -314,18 +314,23 @@ export default function MainContent({
                                 onDrop={handleDrop}
                             >
                                 {!customStyleImage ? (
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-zinc-900/40 group-hover:bg-blue-500/[0.02] transition-colors">
                                         <input
                                             type="file"
                                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                             onChange={handleChange}
                                             accept="image/png, image/jpeg, image/jpg"
                                         />
-                                        <div className="w-16 h-16 rounded-xl bg-zinc-800/50 flex items-center justify-center mb-4 border border-zinc-700/50 group-hover:scale-110 group-hover:bg-blue-500/10 group-hover:border-blue-500/50 transition-all duration-300">
-                                            <Plus className="w-8 h-8 text-zinc-500 group-hover:text-blue-500" />
+                                        <div className="w-20 h-20 rounded-2xl bg-zinc-800/50 flex items-center justify-center mb-6 border border-zinc-700/50 group-hover:scale-110 group-hover:bg-blue-500/20 group-hover:border-blue-500/50 transition-all duration-500 shadow-2xl">
+                                            <Upload className="w-10 h-10 text-zinc-500 group-hover:text-blue-500 transition-colors" />
                                         </div>
-                                        <p className="text-sm font-bold text-zinc-200">Custom Style</p>
-                                        <p className="text-[10px] text-zinc-500 mt-2 uppercase tracking-wider">Drag or click to upload</p>
+                                        <div className="space-y-1">
+                                            <p className="text-lg font-bold text-white tracking-tight leading-tight">Upload Your Own</p>
+                                            <p className="text-lg font-bold text-white tracking-tight leading-tight">Cosplay Style</p>
+                                        </div>
+                                        <p className="text-[11px] text-zinc-500 mt-6 uppercase tracking-[0.2em] font-bold">
+                                            Drag or click to start
+                                        </p>
                                     </div>
                                 ) : (
                                     <>
@@ -347,8 +352,8 @@ export default function MainContent({
                                         </div>
                                         <div className="absolute inset-x-0 bottom-0 p-6 flex items-end justify-between bg-linear-to-t from-black/80 to-transparent">
                                             <div>
-                                                <p className="text-white font-bold text-lg leading-tight">Your Style</p>
-                                                <p className="text-zinc-400 text-[10px] mt-1 uppercase tracking-widest font-semibold">Custom Upload</p>
+                                                <p className="text-white font-bold text-lg leading-tight">Your Cosplay Style</p>
+                                                <p className="text-blue-500 text-[10px] mt-1 uppercase tracking-widest font-bold">Custom Upload</p>
                                             </div>
                                             <div className={cn(
                                                 "w-10 h-10 rounded-full bg-amber-600 border border-amber-400 text-white flex items-center justify-center transition-all duration-300 shadow-lg",

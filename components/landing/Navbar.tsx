@@ -76,13 +76,21 @@ export function Navbar() {
                     </SignedOut>
 
                     <SignedIn>
-                        <UserButton
-                            appearance={{
-                                elements: {
-                                    avatarBox: "w-10 h-10 border border-white/10"
-                                }
-                            }}
-                        />
+                        <div className="flex items-center gap-4">
+                            <Link
+                                href="/dashboard"
+                                className="px-6 py-2.5 rounded-full font-medium text-white text-sm bg-white/10 hover:bg-white/20 transition-all border border-white/10"
+                            >
+                                Dashboard
+                            </Link>
+                            <UserButton
+                                appearance={{
+                                    elements: {
+                                        avatarBox: "w-10 h-10 border border-white/10"
+                                    }
+                                }}
+                            />
+                        </div>
                     </SignedIn>
                 </div>
 
@@ -128,9 +136,18 @@ export function Navbar() {
                     </SignedOut>
 
                     <SignedIn>
-                        <div className="flex items-center gap-4">
-                            <UserButton />
-                            <span className="text-gray-300">Account</span>
+                        <div className="flex flex-col gap-4">
+                            <Link
+                                href="/dashboard"
+                                className="w-full py-3 rounded-xl font-bold text-white bg-white/10 hover:bg-white/20 transition-all border border-white/10 text-center"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                Dashboard
+                            </Link>
+                            <div className="flex items-center gap-4 pt-2">
+                                <UserButton />
+                                <span className="text-gray-300">Account</span>
+                            </div>
                         </div>
                     </SignedIn>
 

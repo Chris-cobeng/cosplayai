@@ -75,8 +75,8 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
             <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain p-6 pb-28 space-y-8">
                 {/* Upload Section */}
                 <div className="space-y-4">
-                    <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] px-1">
-                        Upload Your Photo
+                    <h2 className="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.2em] px-1">
+                        Upload Your Photo Here
                     </h2>
 
                     <AnimatePresence mode="wait">
@@ -128,7 +128,7 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
                                     alt="Uploaded preview"
                                     className="w-full h-full object-contain"
                                 />
-                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]" />
+                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center" />
                                 <button
                                     onClick={removeImage}
                                     className="absolute top-3 right-3 p-2 rounded-xl bg-red-500/20 backdrop-blur-md border border-red-500/50 text-red-500 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white z-20"

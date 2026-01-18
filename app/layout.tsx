@@ -19,19 +19,25 @@ export const metadata: Metadata = {
   description: "Transform your photos into studio-quality cosplay images using AI.",
 };
 
+import { Toaster } from "@/components/ui/sonner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInForceRedirectUrl="/dashboard"
+      signUpForceRedirectUrl="/dashboard"
+    >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
         >
           <SmoothScroll />
           {children}
+          <Toaster richColors position="top-right" />
         </body>
       </html>
     </ClerkProvider>

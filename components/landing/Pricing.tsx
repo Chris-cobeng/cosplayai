@@ -48,8 +48,8 @@ export function Pricing() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                             className={`relative p-8 rounded-3xl border backdrop-blur-sm transition-all duration-300 ${plan.popular
-                                    ? "bg-white/[0.03] border-violet-500/50 shadow-2xl shadow-violet-500/10 scale-105 z-10"
-                                    : "bg-white/[0.01] border-white/5 hover:border-white/10"
+                                ? "bg-white/[0.03] border-violet-500/50 shadow-2xl shadow-violet-500/10 scale-105 z-10"
+                                : "bg-white/[0.01] border-white/5 hover:border-white/10"
                                 }`}
                         >
                             {plan.popular && (
@@ -77,8 +77,8 @@ export function Pricing() {
 
                             <Button
                                 className={`w-full h-12 rounded-xl font-semibold text-base transition-all duration-300 ${plan.popular
-                                        ? "bg-gradient-to-r from-violet-600 to-pink-500 hover:scale-105 shadow-lg shadow-violet-900/20 border-0"
-                                        : "bg-white/5 hover:bg-white/10 text-white border-0"
+                                    ? "bg-gradient-to-r from-violet-600 to-pink-500 hover:scale-105 shadow-lg shadow-violet-900/20 border-0"
+                                    : "bg-white/5 hover:bg-white/10 text-white border-0"
                                     }`}
                             >
                                 {plan.cta}

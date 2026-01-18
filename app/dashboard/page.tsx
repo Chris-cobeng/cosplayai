@@ -125,20 +125,18 @@ export default function DashboardPage() {
 
                 {/* Main Content Area */}
                 <main className="flex-1 relative bg-zinc-950 flex flex-col min-h-0 h-full overflow-hidden">
-                    <div className="flex-1 w-full px-4 pb-4 lg:px-8 lg:pb-8 pt-0 flex flex-col min-h-0">
-                        <MainContent
-                            activeTab={activeTab}
-                            onTabChange={setActiveTab}
-                            galleryImages={galleryImages}
-                            onDeleteImage={deleteImage}
-                            isGenerating={isGenerating}
-                            onClearGallery={clearGallery}
-                            customStyleImage={customStyleImage}
-                            onCustomStyleChange={setCustomStyleImage}
-                            selectedStyle={selectedStyle}
-                            onStyleSelect={setSelectedStyle}
-                        />
-                    </div>
+                    <MainContent
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                        galleryImages={galleryImages}
+                        onDeleteImage={deleteImage}
+                        isGenerating={isGenerating}
+                        onClearGallery={clearGallery}
+                        customStyleImage={customStyleImage}
+                        onCustomStyleChange={setCustomStyleImage}
+                        selectedStyle={selectedStyle}
+                        onStyleSelect={setSelectedStyle}
+                    />
                 </main>
             </div>
         </div>

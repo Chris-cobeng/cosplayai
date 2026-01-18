@@ -86,7 +86,7 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 className={cn(
-                                    "relative group flex flex-col items-center justify-center w-full h-48 rounded-2xl border-2 border-dashed transition-all duration-300 ease-in-out cursor-pointer overflow-hidden",
+                                    "relative group flex flex-col items-center justify-center w-full h-48 rounded-xl border-2 border-dashed transition-all duration-300 ease-in-out cursor-pointer overflow-hidden",
                                     dragActive
                                         ? "border-blue-500 bg-blue-500/10"
                                         : "border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/50 hover:border-zinc-700"
@@ -121,7 +121,7 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="relative w-full h-48 rounded-2xl overflow-hidden shadow-2xl group border border-zinc-800 bg-zinc-950"
+                                className="relative w-full h-48 rounded-xl overflow-hidden shadow-2xl group border border-zinc-800 bg-zinc-950"
                             >
                                 <img
                                     src={uploadedImage}
@@ -202,7 +202,7 @@ export default function Sidebar({ onGenerate, isGenerating, customStyleImage, se
                     }}
                     disabled={isGenerating}
                     className={cn(
-                        "w-full py-4 rounded-xl flex items-center justify-center gap-3 font-bold transition-all duration-300 active:scale-[0.98] border shadow-2xl group",
+                        "w-full py-3.5 rounded-xl flex items-center justify-center gap-3 font-bold transition-all duration-300 active:scale-[0.98] border shadow-2xl group",
                         isGenerating
                             ? "bg-zinc-900 border-zinc-800 text-zinc-700 cursor-not-allowed"
                             : "bg-linear-to-r from-[#FF8C37] via-[#E12B89] to-[#00B19D] hover:opacity-90 border-white/20 text-white shadow-xl"

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Download, Share2, ZoomIn, X, Clock, Trash2, ImageIcon, Plus, Upload } from "lucide-react";
+import { Check, Download, Share2, X, Clock, Trash2, ImageIcon, Plus, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
     Dialog,
@@ -154,24 +154,12 @@ export default function MainContent({
 
     const filteredStyles = STYLES;
 
-    // Format date for display
-    const formatDate = (date: Date) => {
-        const now = new Date();
-        const diffMs = now.getTime() - date.getTime();
-        const diffMins = Math.floor(diffMs / 60000);
-        const diffHours = Math.floor(diffMs / 3600000);
-        const diffDays = Math.floor(diffMs / 86400000);
 
-        if (diffMins < 1) return "Just now";
-        if (diffMins < 60) return `${diffMins}m ago`;
-        if (diffHours < 24) return `${diffHours}h ago`;
-        return `${diffDays}d ago`;
-    };
 
     return (
-        <div className="flex-1 w-full flex flex-col min-h-0 bg-zinc-900/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-zinc-800/50">
+        <div className="flex-1 w-full flex flex-col min-h-0">
             {/* Top Tabs */}
-            <div className="px-8 pt-8 pb-4 border-b border-zinc-800/50 flex items-center justify-between">
+            <div className="px-6 pt-6 pb-2 border-b border-zinc-800/50 flex items-center justify-between">
                 <div className="flex items-center gap-6 overflow-x-auto no-scrollbar">
                     {CATEGORIES.map((category) => (
                         <button
@@ -218,7 +206,7 @@ export default function MainContent({
             </div>
 
             {/* Content Area */}
-            <div data-lenis-prevent className="flex-1 p-4 md:p-8 overflow-y-auto">
+            <div data-lenis-prevent className="flex-1 p-6 overflow-y-auto">
                 <AnimatePresence mode="wait">
                     {activeTab === "Gallery" ? (
                         <motion.div
@@ -255,7 +243,7 @@ export default function MainContent({
                                             </div>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                                 {[1, 2].map((i) => (
-                                                    <div key={i} className="aspect-3/4 rounded-2xl bg-zinc-800 animate-pulse flex items-center justify-center border border-zinc-700/50">
+                                                    <div key={i} className="aspect-3/4 rounded-xl bg-zinc-800 animate-pulse flex items-center justify-center border border-zinc-700/50">
                                                         <div className="w-10 h-10 border-2 border-zinc-700 border-t-blue-500 rounded-full animate-spin" />
                                                     </div>
                                                 ))}
@@ -270,36 +258,26 @@ export default function MainContent({
                                                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                                 transition={{ delay: idx * 0.05 }}
-                                                className="group relative aspect-3/4 rounded-2xl overflow-hidden shadow-xl bg-zinc-800 border border-zinc-700/50 cursor-pointer"
+                                                className="group relative aspect-3/4 rounded-xl overflow-hidden shadow-xl bg-zinc-800 border border-zinc-700/50 cursor-pointer"
                                                 onClick={() => setCarouselIndex(idx)}
                                             >
-                                                <img src={image.url} alt="Generated cosplay" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                                <img src={image.url} alt="Generated cosplay" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
 
-                                                <div className="absolute top-3 left-3">
-                                                    <span className="px-2 py-1 text-[10px] font-bold bg-black/60 backdrop-blur-md text-white rounded-lg border border-white/10">
-                                                        {formatDate(image.createdAt)}
-                                                    </span>
-                                                </div>
-
-                                                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                                                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-4">
                                                     <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                                                         <button
-                                                            onClick={() => setCarouselIndex(idx)}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                const link = document.createElement('a');
+                                                                link.href = image.url;
+                                                                link.download = `cosplay-${image.id}.png`;
+                                                                document.body.appendChild(link);
+                                                                link.click();
+                                                                document.body.removeChild(link);
+                                                            }}
                                                             className="p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-all transform hover:scale-110 border border-white/10"
                                                         >
-                                                            <ZoomIn className="w-5 h-5" />
-                                                        </button>
-                                                        <button className="p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-all transform hover:scale-110 border border-white/10">
                                                             <Download className="w-5 h-5" />
-                                                        </button>
-                                                        <button className="p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-all transform hover:scale-110 border border-white/10">
-                                                            <Share2 className="w-5 h-5" />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => onDeleteImage(image.id)}
-                                                            className="p-2.5 bg-red-500/20 hover:bg-red-500/40 backdrop-blur-md rounded-full text-red-500 transition-all transform hover:scale-110 ml-auto border border-red-500/20"
-                                                        >
-                                                            <Trash2 className="w-5 h-5" />
                                                         </button>
                                                     </div>
                                                 </div>
@@ -323,7 +301,7 @@ export default function MainContent({
                                 layoutId="style-custom"
                                 onClick={() => onStyleSelect("custom")}
                                 className={cn(
-                                    "group relative aspect-3/4 rounded-2xl overflow-hidden cursor-pointer text-left transition-all duration-300 border-2 border-dashed",
+                                    "group relative aspect-3/4 rounded-xl overflow-hidden cursor-pointer text-left transition-all duration-300 border-2 border-dashed",
                                     selectedStyle === "custom"
                                         ? "ring-1 ring-amber-500 ring-offset-2 ring-offset-zinc-950 shadow-amber-500/20 shadow-2xl scale-[1.02] border-amber-500 bg-amber-500/5"
                                         : dragActive
@@ -343,7 +321,7 @@ export default function MainContent({
                                             onChange={handleChange}
                                             accept="image/png, image/jpeg, image/jpg"
                                         />
-                                        <div className="w-16 h-16 rounded-2xl bg-zinc-800/50 flex items-center justify-center mb-4 border border-zinc-700/50 group-hover:scale-110 group-hover:bg-blue-500/10 group-hover:border-blue-500/50 transition-all duration-300">
+                                        <div className="w-16 h-16 rounded-xl bg-zinc-800/50 flex items-center justify-center mb-4 border border-zinc-700/50 group-hover:scale-110 group-hover:bg-blue-500/10 group-hover:border-blue-500/50 transition-all duration-300">
                                             <Plus className="w-8 h-8 text-zinc-500 group-hover:text-blue-500" />
                                         </div>
                                         <p className="text-sm font-bold text-zinc-200">Custom Style</p>
@@ -389,7 +367,7 @@ export default function MainContent({
                                     layoutId={`style-${style.id}`}
                                     onClick={() => onStyleSelect(style.id)}
                                     className={cn(
-                                        "group relative aspect-3/4 rounded-2xl overflow-hidden cursor-pointer text-left transition-all duration-300",
+                                        "group relative aspect-3/4 rounded-xl overflow-hidden cursor-pointer text-left transition-all duration-300",
                                         selectedStyle === style.id
                                             ? "ring-1 ring-amber-500 ring-offset-2 ring-offset-zinc-950 shadow-amber-500/20 shadow-2xl scale-[1.02]"
                                             : "hover:shadow-xl hover:shadow-black/50 hover:-translate-y-1"
@@ -448,11 +426,11 @@ export default function MainContent({
                                 <CarouselContent className="h-full">
                                     {galleryImages.map((image) => (
                                         <CarouselItem key={image.id} className="h-full flex items-center justify-center">
-                                            <div className="relative w-full h-full p-8 md:p-24 flex items-center justify-center">
+                                            <div className="relative w-full h-full p-4 md:p-12 flex items-center justify-center">
                                                 <img
                                                     src={image.url}
                                                     alt="Cosplay generation"
-                                                    className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl select-none"
+                                                    className="w-auto h-auto max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl select-none border border-white/5"
                                                 />
                                             </div>
                                         </CarouselItem>
@@ -467,20 +445,25 @@ export default function MainContent({
 
                         {/* Modal Footer Info */}
                         {carouselIndex !== null && galleryImages[carouselIndex] && (
-                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-zinc-900/90 backdrop-blur-xl px-6 py-3 rounded-2xl border border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.5)] transition-all animate-in fade-in slide-in-from-bottom-4">
-                                <div className="flex flex-col items-center">
-                                    <span className="text-white font-bold text-sm tracking-tight">Image {carouselIndex + 1} <span className="text-zinc-500 font-medium ml-1">of {galleryImages.length}</span></span>
-                                    <span className="text-zinc-500 text-[10px] uppercase tracking-[0.2em] font-bold mt-0.5">{formatDate(galleryImages[carouselIndex].createdAt)}</span>
-                                </div>
-                                <div className="w-px h-8 bg-zinc-800 mx-2" />
-                                <div className="flex items-center gap-2">
-                                    <button className="p-2.5 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all active:scale-95 group">
-                                        <Download className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
-                                    </button>
-                                    <button className="p-2.5 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all active:scale-95 group">
-                                        <Share2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                    </button>
-                                </div>
+                            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-zinc-950/80 backdrop-blur-2xl px-4 py-2 rounded-2xl border border-zinc-800/50 shadow-2xl transition-all animate-in fade-in slide-in-from-bottom-4">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        const link = document.createElement('a');
+                                        link.href = galleryImages[carouselIndex].url;
+                                        link.download = `cosplay-${galleryImages[carouselIndex].id}.png`;
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        document.body.removeChild(link);
+                                    }}
+                                    className="p-3 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all active:scale-95 group"
+                                >
+                                    <Download className="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" />
+                                </button>
+                                <div className="w-px h-6 bg-zinc-800/50 mx-1" />
+                                <button className="p-3 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all active:scale-95 group">
+                                    <Share2 className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                                </button>
                             </div>
                         )}
                     </DialogContent>

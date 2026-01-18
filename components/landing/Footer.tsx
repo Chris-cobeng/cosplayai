@@ -60,7 +60,7 @@ export function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-                    <div>© 2024 CosplayAI Inc. All rights reserved.</div>
+                    <div>© {new Date().getFullYear()} CosplayAI Inc. All rights reserved.</div>
                     <div className="flex gap-8">
                         <Link href="#" className="hover:text-white">Privacy Policy</Link>
                         <Link href="#" className="hover:text-white">Terms of Service</Link>

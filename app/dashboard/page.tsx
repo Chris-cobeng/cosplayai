@@ -131,6 +131,8 @@ export default function DashboardPage() {
                             onTabChange={setActiveTab}
                             galleryImages={galleryImages}
                             onDeleteImage={deleteImage}
+                            isGenerating={isGenerating}
+                            onClearGallery={clearGallery}
                             customStyleImage={customStyleImage}
                             onCustomStyleChange={setCustomStyleImage}
                             selectedStyle={selectedStyle}
